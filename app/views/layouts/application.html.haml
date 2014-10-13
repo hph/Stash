@@ -5,9 +5,32 @@
     %meta(charset='utf-8')
     %meta(name='viewport' content='width=device-width, initial-scale=1.0')
     %meta(name='author' content='Haukur Páll Hallvarðsson')
-    %meta(name='description' content="Haukur Páll Hallvarðsson's personal website")
+    %meta(name='description' content='Store, share and discover bookmarks!')
     = csrf_meta_tags
+    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css'
+    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
     = stylesheet_link_tag 'application'
   %body
-    = yield
+    %nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header
+          %a.navbar-brand(href='/') Stash
+          %button.navbar-toggle(type='button' data-toggle='collapse' data-target='.navbar-responsive-collapse')
+            %span.fa.fa-bars
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li
+                %a{href: destroy_user_session_path}
+                  %i.fa.fa-power-off
+                  Log Out
+            - else
+              %li{class: active(new_user_session_path)}
+                %a{href: new_user_session_path}
+                  %i.fa.fa-user.icon-white
+                  Log In
+    .container.content
+      = yield
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+    = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     = javascript_include_tag 'application'

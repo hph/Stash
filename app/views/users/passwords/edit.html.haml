@@ -1,12 +1,18 @@
-%h2 Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |f|
-  = devise_error_messages!
-  = f.hidden_field :reset_password_token
-  = f.label :password, 'New password'
-  %br
-  = f.password_field :password, autofocus: true, autocomplete: 'off'
-  = f.label :password_confirmation, 'Confirm new password'
-  %br
-  = f.password_field :password_confirmation, autocomplete: 'off'
-  = f.submit 'Change my password'
-= render 'users/shared/links'
+.row
+  .col-sm-offset-3.col-sm-6
+    %h2 Change your password
+    = devise_error_messages!
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |f|
+      = f.hidden_field :reset_password_token
+      .form-group
+        %label.input-group
+          .input-group-addon
+            %i.fa.fa-key
+          = f.password_field :password, class: 'form-control', autofocus: true, placeholder: 'New password'
+      .form-group
+        %label.input-group
+          .input-group-addon
+            %i.fa.fa-key
+          = f.password_field :password_confirmation, class: 'form-control', autofocus: true, placeholder: 'New password confirmation'
+      .form-group= f.submit 'Change my password', class: 'btn btn-success btn-block'
+    = render "users/shared/links"
