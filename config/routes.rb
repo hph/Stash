@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'application#index'
+  authenticated do
+    root to: 'links#index', as: 'home'
+  end
+
+  root to: 'application#index', as: 'marketing'
 
   devise_for :users
 end
