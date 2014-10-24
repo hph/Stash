@@ -1,5 +1,12 @@
+$white: rgb(255, 255, 255);
+$hover-grey: rgb(236, 240, 241);
+
+#log-out {
+  cursor: pointer;
+}
+
 .fa-bars {
-  color: #fff;
+  color: $white;
 }
 
 .content {
@@ -11,5 +18,23 @@
 
   .sign-up {
     margin-top: 50px;
+  }
+}
+
+.edit-link-button {
+  float: right;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.list-group-item:hover {
+  background-color: $hover-grey;
+  cursor: pointer;
+}
+
+.edit-link {
+  a {
+    margin-top: 38px;
   }
 }

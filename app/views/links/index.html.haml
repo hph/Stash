@@ -1,0 +1,13 @@
+%h2 Links
+- if @links.empty?
+  .alert.alert-info
+    %strong Heads up!
+    %p You haven't added any links yet.
+    %a.alert-link{href: new_link_path} Create a new link
+- else
+  .list-group
+    - @links.each do |link|
+      .list-group-item(data-uid="#{link.uid}")
+        %h4= link.name
+        %p= link.url
+        %i.fa.fa-pencil.edit-link-button

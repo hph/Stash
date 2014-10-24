@@ -20,8 +20,11 @@
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
-              %li
-                %a{href: destroy_user_session_path}
+              %a.btn.btn-success.navbar-btn{href: new_link_path}
+                %i.fa.fa-plus
+                New Link
+              %li.pull-right
+                %a#log-out
                   %i.fa.fa-power-off
                   Log Out
             - else
@@ -34,3 +37,8 @@
     = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'
     = javascript_include_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     = javascript_include_tag 'application'
+    :javascript
+      App = {
+        sign_out_path: "#{destroy_user_session_path}"
+      }
+    = route_specific_javascript

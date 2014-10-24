@@ -1,0 +1,20 @@
+.row.link(data-uid="#{@link.uid}")
+  .col-sm-offset-3.col-sm-6
+    .row.edit-link
+      .col-xs-8
+        %h2 Link
+      .col-xs-4
+        %a.pull-right{href: @link.url} Visit page &raquo;
+    .form-group
+      %label URL
+      %input.form-control(name='url' autofocus){value: @link.url}
+    .form-group
+      %label Name
+      %input.form-control(name='name'){value: @link.name}
+    .row
+      .col-xs-6
+        .form-group
+          %button.btn.btn-danger.form-control#delete Delete
+      .col-xs-6
+        .form-group
+          %button.btn.btn-success.form-control#update(type='submit') Update

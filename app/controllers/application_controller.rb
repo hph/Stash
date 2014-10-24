@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   after_action :store_location
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   private
 
   def store_location
