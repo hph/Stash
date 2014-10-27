@@ -1,13 +1,36 @@
-%h2 Links
 - if @links.empty?
-  .alert.alert-info
-    %strong Heads up!
-    %p You haven't added any links yet.
-    %a.alert-link{href: new_link_path} Create a new link
+  .row
+    .col-sm-offset-3.col-sm-6
+      %h3 Links
+      .alert.alert-info
+        %strong Heads up!
+        %p You haven't added any links yet.
+        %a.alert-link{href: new_link_path} Create a new link
 - else
-  .list-group
-    - @links.each do |link|
-      .list-group-item(data-uid="#{link.uid}")
-        %h4= link.name
-        %p= link.url
-        %i.fa.fa-pencil.edit-link-button
+  .row
+    .col-sm-6
+      %h3 Links
+      .list-group
+        - @links.each do |link|
+          .list-group-item.link(data-uid="#{link.uid}")
+            %h4= link.name
+            %p= link.url
+            %i.fa.fa-pencil.edit-link-button
+            .tags
+              - link.tags.each do |tag|
+                %span.tag.label.label-success= tag.name
+    .col-sm-6
+      .row.tags-area
+        .col-xs-12
+          %h3 Tags
+          .row
+            - @tags.each do |tag|
+              .col-xs-6
+                .list-group
+                  .list-group-item.active
+                    = link_to tag.name, show_tag_path(tag.name)
+                    %span.badge= @counts[tag.id]
+                  - tag.links.each do |link|
+                    .list-group-item.link(data-uid="#{link.uid}")
+                      %h5= link.name
+                      %i.fa.fa-pencil.edit-link-button.small-pencil

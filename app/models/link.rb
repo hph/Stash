@@ -1,6 +1,7 @@
 class Link < ActiveRecord::Base
   belongs_to :user
   has_many :trackings
+  has_and_belongs_to_many :tags, unique: true
   before_create :set_uid
   before_create :fix_url
   validates :url, presence: true
@@ -17,6 +18,12 @@ class Link < ActiveRecord::Base
   def visit!
     self.visits += 1
     save
+  end
+
+  def tag!(names)
+    names.split(',').map(&:strip).each do |name|
+      tags << Tag.find_or_create_by(name: name)
+    end
   end
 
   private

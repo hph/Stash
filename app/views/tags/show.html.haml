@@ -1,0 +1,12 @@
+.row
+  .col-xs-12
+    %h3= @tag.name
+    .list-group
+      - @tag.links.each do |link|
+        .list-group-item.link(data-uid="#{link.uid}")
+          %h4= link.name
+          %p= link.url
+          %i.fa.fa-pencil.edit-link-button
+          .tags
+            - link.tags.each do |tag|
+              %span.tag.label.label-success= tag.name

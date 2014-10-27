@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022232627) do
+ActiveRecord::Schema.define(version: 20141026172418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,14 +27,23 @@ ActiveRecord::Schema.define(version: 20141022232627) do
     t.integer  "visits",     default: 0,     null: false
   end
 
-  add_index "links", ["uid"], name: "index_links_on_uid", using: :btree
+  add_index "links", ["uid"], name: "index_links_on_uid", unique: true, using: :btree
   add_index "links", ["user_id"], name: "index_links_on_user_id", using: :btree
+
+  create_table "links_tags", id: false, force: true do |t|
+    t.integer "tag_id",  null: false
+    t.integer "link_id", null: false
+  end
+
+  add_index "links_tags", ["tag_id", "link_id"], name: "index_links_tags_on_tag_id_and_link_id", unique: true, using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "trackings", force: true do |t|
     t.integer "user_id"
@@ -43,7 +52,6 @@ ActiveRecord::Schema.define(version: 20141022232627) do
   end
 
   add_index "trackings", ["link_id"], name: "index_trackings_on_link_id", using: :btree
-  add_index "trackings", ["user_id"], name: "index_trackings_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -64,6 +72,9 @@ ActiveRecord::Schema.define(version: 20141022232627) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "links", "users", name: "links_user_id_fk", dependent: :delete
+
+  add_foreign_key "links_tags", "links", name: "links_tags_link_id_fk", dependent: :delete
+  add_foreign_key "links_tags", "tags", name: "links_tags_tag_id_fk", dependent: :delete
 
   add_foreign_key "trackings", "links", name: "trackings_link_id_fk", dependent: :delete
   add_foreign_key "trackings", "users", name: "trackings_user_id_fk", dependent: :delete

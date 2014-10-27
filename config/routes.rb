@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   delete '/links/:uid', to: 'links#destroy',  as: 'destroy_link'
   get    '/:uid',       to: 'links#redirect', as: 'redirect_link'
 
+  get '/tags/:name', to: 'tags#show', as: 'show_tag'
+
+
   devise_for :users
 end

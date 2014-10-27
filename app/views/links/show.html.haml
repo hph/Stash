@@ -4,17 +4,20 @@
       .col-xs-8
         %h2 Link
       .col-xs-4
-        %a.pull-right{href: @link.url} Visit page &raquo;
+        %button.btn.btn-xs.btn-danger#delete-link Delete
     .form-group
       %label URL
       %input.form-control(name='url' autofocus){value: @link.url}
     .form-group
       %label Name
       %input.form-control(name='name'){value: @link.name}
+    .form-group
+      %label Tags
+      %input.form-control(name='tags'){value: @tags}
     .row
       .col-xs-6
         .form-group
-          %button.btn.btn-danger.form-control#delete Delete
+          %a.btn.btn-default.form-control{href: @link.url} Visit page &raquo;
       .col-xs-6
         .form-group
-          %button.btn.btn-success.form-control#update(type='submit') Update
+          %button.btn.btn-success.form-control#update-link(type='submit') Update

@@ -1,8 +1,14 @@
 $white: rgb(255, 255, 255);
 $hover-grey: rgb(236, 240, 241);
+$primary: rgb(44, 62, 80);
 
 #log-out {
   cursor: pointer;
+}
+
+#delete-link {
+  float: right;
+  margin-top: 32px;
 }
 
 .fa-bars {
@@ -28,13 +34,42 @@ $hover-grey: rgb(236, 240, 241);
   right: 8px;
 }
 
-.list-group-item:hover {
+i.edit-link-button {
+  display: none;
+}
+
+.list-group-item.link:hover {
   background-color: $hover-grey;
   cursor: pointer;
+  i {
+    display: block;
+  }
 }
 
 .edit-link {
   a {
     margin-top: 38px;
+  }
+}
+
+.small-pencil {
+  margin-top: 12px;
+}
+
+.settings {
+  color: $primary;
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 16px;
+}
+
+.settings:hover {
+  color: $primary;
+}
+
+.tags-area:hover {
+  a.settings {
+    display: block;
   }
 }

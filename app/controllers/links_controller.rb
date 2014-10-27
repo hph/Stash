@@ -1,6 +1,10 @@
 class LinksController < ApplicationController
   def index
-    @links = Link.where(user_id: current_user.id).order('created_at DESC').all
+    @links = Link.where(user_id: current_user.id).includes(:tags)
+                 .order('links.created_at DESC').all
+    @tags = Tag.joins(:links).includes(:links)
+               .where('links.user_id = ?', current_user.id).all
+    @counts = @tags.map { |tag| [tag.id, tag.links.count] }.to_h
   end
 
   def new
@@ -9,6 +13,7 @@ class LinksController < ApplicationController
   def create
     link = Link.create(link_params.merge(user_id: current_user.id))
     if link.persisted?
+      link.tag!(params[:link][:tags])
       redirect_to home_path
     else
       redirect_to new_link_path
@@ -17,11 +22,14 @@ class LinksController < ApplicationController
 
   def show
     @link = Link.find_by_uid!(params[:uid])
+    @tags = @link.tags.map { |tag| tag.name }.join(', ')
   end
 
   def update
     link = Link.find_by_uid!(params[:uid])
     link.update_attributes(link_params)
+    link.tags.destroy_all
+    link.tag!(params[:link][:tags])
     render json: {link: link}
   end
 

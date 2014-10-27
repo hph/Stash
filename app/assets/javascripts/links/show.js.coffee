@@ -1,18 +1,19 @@
 $ ->
   uid = $('.link').data 'uid'
 
-  $('#delete').click (event) ->
+  $('#delete-link').click (event) ->
     $.ajax
       url: "/links/#{uid}",
       type: 'DELETE',
       success: (response) ->
         window.location = '/'
 
-  $('#update').click (event) ->
+  $('#update-link').click (event) ->
     data =
       link:
         url: $('input[name="url"]').val()
         name: $('input[name="name"]').val()
+        tags: $('input[name="tags"]').val()
     $.ajax
       url: "/links/#{uid}"
       type: 'PUT'
