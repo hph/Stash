@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031212639) do
+ActiveRecord::Schema.define(version: 20141101004230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141031212639) do
     t.datetime "updated_at"
     t.boolean  "public",     default: false, null: false
     t.integer  "visits",     default: 0,     null: false
+    t.string   "category"
   end
 
   add_index "links", ["uid"], name: "index_links_on_uid", unique: true, using: :btree

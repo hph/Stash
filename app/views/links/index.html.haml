@@ -1,36 +1,60 @@
 - if @links.empty?
   .row
     .col-sm-offset-3.col-sm-6
-      %h3 Links
+      - if @page == 'favourites'
+        %h3 Favourite Links
+      - elsif @page == 'unread'
+        %h3 Unread Links
+      - else
+        %h3 All Links
       .alert.alert-info
         %strong Heads up!
-        %p You haven't added any links yet.
-        %a.alert-link{href: new_link_path} Create a new link
+        - if @page == 'favourites'
+          %p You haven't added any links to Favourites yet.
+          %a.alert-link{href: new_link_path(category: 'favourites')} Add a link
+        - elsif @page == 'unread'
+          %p You haven't added any links to Unread yet.
+          %a.alert-link{href: new_link_path(category: 'unread')} Add a link
+        - else
+          %p You haven't added any links yet.
+          %a.alert-link{href: new_link_path} Add a link
 - else
   .row
-    .col-sm-6
-      %h3 Links
+    .col-sm-9
+      - if @page == 'favourites'
+        %h3 Favourite Links
+      - elsif @page == 'unread'
+        %h3 Unread Links
+      - else
+        %h3 All Links
       .list-group
         - @links.each do |link|
           .list-group-item.link(data-uid="#{link.uid}")
             %h4= link.name
             %p= link.url
+            - if link.category.nil?
+              %i.fa.fa-circle-o.read-later-button.toggle
+              %i.fa.fa-star-o.favourite-button.toggle
+            - elsif link.category == 'favourites'
+              %i.fa.fa-circle-o.read-later-button.toggle
+              %i.fa.fa-star.favourite-button.toggle
+            - elsif link.category == 'unread'
+              %i.fa.fa-clock-o.read-later-button.toggle
+              %i.fa.fa-star-o.favourite-button.toggle
+            - else
+              = binding.pry
             %i.fa.fa-pencil.edit-link-button
             .tags
               - link.tags.each do |tag|
                 %span.tag.label.label-success= tag.name
-    .col-sm-6
+    .col-sm-3
       .row.tags-area
         .col-xs-12
           %h3 Tags
-          .row
+          - if @tags.empty?
+            .alert.alert-info
+              %strong Heads up!
+              %p You haven't tagged any of these links!
+          - else
             - @tags.each do |tag|
-              .col-xs-6
-                .list-group
-                  .list-group-item.active
-                    = link_to tag.name, show_tag_path(tag.name)
-                    %span.badge= @counts[tag.id]
-                  - tag.links.each do |link|
-                    .list-group-item.link(data-uid="#{link.uid}")
-                      %h5= link.name
-                      %i.fa.fa-pencil.edit-link-button.small-pencil
+              = link_to tag.name, show_tag_path(tag.name), class: 'btn btn-xs btn-primary tag-button'

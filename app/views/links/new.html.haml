@@ -1,15 +1,41 @@
 .row
   .col-sm-offset-3.col-sm-6
-    %h2 New link
-    = form_for :link, url: create_link_path do |f|
+    %h2 New Link
+    = form_for :link, url: create_link_path(@query_param) do |f|
       .form-group
         %label URL
+        %i.fa.fa-question-circle.help(data-toggle='popover' data-trigger='hover' title='URL' data-content='The URL is the web address of the website.' data-placement='left')
         = f.text_field :url, class: 'form-control', autocomplete: 'off', placeholder: 'URL', required: true, autofocus: true
       .form-group
         %label Name
+        %i.fa.fa-question-circle.help(data-toggle='popover' data-trigger='hover' title='Name' data-content='Giving your link a descriptive name will help you at finding it later.' data-placement='left')
         = f.text_field :name, class: 'form-control', autocomplete: 'off', placeholder: 'Name', required: true
       .form-group
         %label Tags
+        %i.fa.fa-question-circle.help(data-toggle='popover' data-trigger='hover' title='Tags' data-content='Tagging links is a simple way to categorize them and helps finding them later. Specify multiple tags by separating their names with commas. Not required.' data-placement='left')
         = f.text_field :tags, class: 'form-control', autocomplete: 'off', placeholder: 'Tags', required: true
       .form-group
-        = f.submit 'Create link', class: 'btn btn-primary form-control'
+        %label Category
+        %i.fa.fa-question-circle.help(data-toggle='popover' data-trigger='hover' title='Category' data-content='If Favourites or Unread is selected, the link will go to the specified page. Favourites are a simple way to keep your favourite links in one place. Unread links are for those links you need to read later and when you open them they are removed from the list. Not required.' data-placement='left')
+        %select.form-control(name='link[category]')
+          - if @category == nil
+            %option(value='' selected) None
+          - else
+            %option(value='') None
+          - if @category == 'favourites'
+            %option(value='favourites' selected) Favourites
+          - else
+            %option(value='favourites') Favourites
+          - if @category == 'unread'
+            %option(value='unread' selected) Unread
+          - else
+            %option(value='unread') Unread
+      .form-group
+        .form-inline
+          %i.fa.fa-question-circle.help(data-toggle='popover' data-trigger='hover' title='Public' data-content='If you check this box the link will be visible to anyone. This could mean that it appears under tag pages for the tags it has, etc.' data-placement='left')
+          .checkbox
+            %label
+              = f.check_box :public
+              Make public (visible to anyone)
+      .form-group
+        = f.submit 'Create Link', class: 'btn btn-success form-control'

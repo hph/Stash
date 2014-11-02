@@ -18,11 +18,30 @@
           %button.navbar-toggle(type='button' data-toggle='collapse' data-target='.navbar-responsive-collapse')
             %span.fa.fa-bars
         .navbar-collapse.collapse.navbar-responsive-collapse
+          - if user_signed_in?
+            %ul.nav.navbar-nav
+              %li{class: active(home_path)}
+                %a{href: home_path}
+                  %i.fa.fa-list
+                  All
+              %li{class: active(favourites_path)}
+                %a{href: favourites_path}
+                  %i.fa.fa-star
+                  Favourites
+              %li{class: active(unread_path)}
+                %a{href: unread_path}
+                  %i.fa.fa-clock-o
+                  Unread
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
-              %a.btn.btn-success.navbar-btn{href: new_link_path}
-                %i.fa.fa-plus
-                New Link
+              - if @page != ''
+                %a.btn.btn-success.navbar-btn{href: new_link_path(category: @page)}
+                  %i.fa.fa-plus
+                  New Link
+              - else
+                %a.btn.btn-success.navbar-btn{href: new_link_path}
+                  %i.fa.fa-plus
+                  New Link
               %li.pull-right
                 %a#log-out
                   %i.fa.fa-power-off

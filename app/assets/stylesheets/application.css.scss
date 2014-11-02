@@ -27,14 +27,29 @@ $primary: rgb(44, 62, 80);
   }
 }
 
-.edit-link-button {
+.edit-link-button, .favourite-button, .read-later-button {
   float: right;
   position: absolute;
   top: 8px;
+}
+
+.edit-link-button {
+  right: 52px;
+}
+
+.favourite-button {
+  right: 30px;
+}
+
+.read-later-button {
   right: 8px;
 }
 
-i.edit-link-button {
+i.favourite-button.fa-star, i.read-later-button.fa-clock-o {
+  display: block;
+}
+
+i.edit-link-button, i.favourite-button, i.read-later-button {
   display: none;
 }
 
@@ -68,8 +83,10 @@ i.edit-link-button {
   color: $primary;
 }
 
-.tags-area:hover {
-  a.settings {
-    display: block;
-  }
+.help {
+  float: right;
+}
+
+.tag-button {
+  margin: 3px;
 }
