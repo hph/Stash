@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  authenticated do
-    root to: 'links#index', as: 'home'
-  end
-
-  root to: 'application#index', as: 'marketing'
+  root to: 'links#index', as: 'home'
 
   get    '/favourites', to: 'links#index',    as: 'favourites'
   get    '/unread',     to: 'links#index',    as: 'unread'
